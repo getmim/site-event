@@ -2,7 +2,7 @@
 
 return [
     '__name' => 'site-event',
-    '__version' => '0.0.1',
+    '__version' => '0.0.2',
     '__git' => 'git@github.com:getmim/site-event.git',
     '__license' => 'MIT',
     '__author' => [
@@ -28,6 +28,9 @@ return [
             ],
             [
                 'lib-formatter' => NULL
+            ],
+            [
+                'lib-pagination' => NULL
             ]
         ],
         'optional' => [

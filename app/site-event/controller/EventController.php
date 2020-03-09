@@ -10,20 +10,34 @@ namespace SiteEvent\Controller;
 use SiteEvent\Meta\Event as Meta;
 use Event\Model\Event;
 use LibFormatter\Library\Formatter;
+use LibPagination\Library\Paginator;
 
 class EventController extends \Site\Controller
 {
     public function indexAction(){
         list($page, $rpp) = $this->req->getPager();
+        $rpp = 1;
 
         $events = Event::get([], $rpp, $page, ['id'=>false]);
         if($events)
             $events = Formatter::formatMany('event', $events, ['user']);
-        
+
         $params = [
-            'events' => $events,
-            'meta'   => Meta::index($events, $page)
+            'pagination' => null,
+            'events'     => $events,
+            'meta'       => Meta::index($events, $page)
         ];
+
+        $total = Event::count([]);
+        if($total > $rpp){
+            $params['pagination'] = new Paginator(
+                $this->router->to('siteEventIndex'),
+                $total,
+                $page,
+                $rpp,
+                10
+            );
+        }
 
         $this->res->render('event/index', $params);
         $this->res->setCache(86400);
