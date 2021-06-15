@@ -122,7 +122,7 @@ class Event{
 
         // schema logo
         $meta_image = null;
-        if($page->cover->url->target){
+        if($page->cover->url && $page->cover->url->target){
             $meta_image = [
                 '@context'   => 'http://schema.org',
                 '@type'      => 'ImageObject',
@@ -181,6 +181,9 @@ class Event{
 
         if($sameAs)
             $schema['sameAs'] = $sameAs;
+
+        if($page->ages->value)
+            $schema['typicalAgeRange'] = $page->ages;
 
         $result['head']['schema.org'][] = $schema;
 
