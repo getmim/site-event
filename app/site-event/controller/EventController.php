@@ -16,7 +16,6 @@ class EventController extends \Site\Controller
 {
     public function indexAction(){
         list($page, $rpp) = $this->req->getPager();
-        $rpp = 1;
 
         $events = Event::get([], $rpp, $page, ['id'=>false]);
         if($events)
